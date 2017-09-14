@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+Copyright (c) 2009 Frank Font - Room4me.com Software LLC
+
+Email: consulting@room4me.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="css/instructions.css" type="text/css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Raw Load Tester v1.0 - Information</title>
+    </head>
+    <body>
+        <div id="main">
+
+            <img class="floatRight" src="images/R4MElephantA_520.gif" alt="logo">
+            <h1>Raw Load Tester v1.0</h1>
+            <p>The RawLoadTester application is a <a href="license.html">free Open Source</a> tool to load test websites.
+            It does not have many features but it is useful in situations where using a more comprehensive load testing
+            solution (e.g., <a href="http://httpd.apache.org/test/flood/">Apache Flood</a>) is not practical.  
+            </p>
+
+            <p>
+            The application calls the URL you select as many times as you choose and tells you how long it took the server to respond.  
+            It writes some additional runtime details to the PHP log file so you can optionally do more granular analysis afterwards.  Although the server processes most of the statistics, all URL requests come from the browser.  You can run as many browsers and workstations simultaneously as you want.
+            </p>
+
+            <p>
+            It is possible that non-programers can install and use this application (e.g., junior testers); but, these instructions and the program itself assume the installer and user are familiar with their webserver configuration.
+            </p>
+
+            <h2>Requirements</h2>
+            <p>
+                In general, if you can load one page onto a PHP host, then you can use this application to test your URL.
+            </p>
+            <ol>
+                <li>A JavaScript enabled web browser</li>
+                <li>PHP on which to host the load testing page (If you don't already have it, consider <a href="http://www.apachefriends.org/en/xampp.html">XAMPP</a>.)</li>
+                <li>Permission to load test the target URL</li>
+            </ol>
+            <p>
+                <b>IMPORTANT: Only load test URLs that you are authorized to load test!  If you do not own the server and do not have permission to load test the application on the server, do NOT load test it.</b>
+            </p>
+            <!--
+            <h2>Package Download</h2>
+            <a href="package/RawLoadTester_v1-0.zip">RawLoadTester_v1-0.zip</a>
+            -->
+            <h2>How To Use</h2>
+            <p>
+                The main part of the application is the RawLoadTester.php page.  You should host this page in an envirionment that runs PHP scripts, for example a web server that runs PHP pages.
+            </p>
+            <p>
+                The RawLoadTester.php page looks like this when you first bring it up in your browser after installing it...
+            </p>
+            <img src="images/Screenshot1.gif" alt="screenshot of application">
+            <p>
+                The IP address of the user calling the page appears in the page header and also in log entries during the test runs.  The default URL is just the URL to the page itself.  The Test Counter has a default value of ZERO, but you need to make that a non-ZERO number before starting your test.
+            </p>
+            <p>
+                As an example, lets run a simple test with 50 iterations on the localhost installation for which we are taking screenshots.  First, we set the URL to the license.html page.  Next, we put the value 50 into the Test Counter field.  We don't change the default values for Time Spread and Avoid Cache.  The page would then look like this...
+            </p>
+            <img src="images/Screenshot2.gif" alt="screenshot of application">
+            <p>
+                After we click the "Start the Test" button, the screen becomes red and we see the URL page load repeatedly while the test runs.
+            </p>
+            <img src="images/Screenshot3.gif" alt="screenshot of application">
+            <p>
+                Once the test is complete, we see a summary of our results at the top of the page.
+            </p>
+            <img src="images/Screenshot4.gif" alt="screenshot of application">
+            <p>
+                <b>NOTE:</b> Elapsed time is measured in whole seconds.  The average elapsed time is computed as an average of those whole seconds, so there can be fractional results for the <i>Average interval</i> but not for the <i>Minimum and Maximum intervals</i>.  For example, if the response time was less than a second, you will see 0 seconds as the <i>Minimum interval</i> value..
+            </p>
+
+            <h2>
+                Parameter Summary
+            </h2>
+            <p>
+            <ul>
+                <li><span class="fieldname">Test URL</span> - This the URL of the page that will be repeatedly called for the test.</li>
+                <li><span class="fieldname">Test Counter</span> - The number of times the script will request to load the page at the Test URL.</li>
+                <li><span class="fieldname">Time Spread (hours)</span> - Only use this if you want to spread the iterations over a fixed period of time.  Two hours is "2", a half hour is ".5", fifteen minutes is ".25".  The script will automatically compute the appropriate pause between requests to spread it out over the requested time.  A value of zero here requests the URL as fast as possible.</li>
+                <li><span class="fieldname">Avoid Cache</span> - Generally want this to be "Yes".  If you make it "No", the script will not append a changing parameter to your URL and the server will likely respond from the cache.</li>
+            </ul>
+            </p>
+            <h2>Log File Entries</h2>
+            <p>
+            The script writes to your php error log file as it runs.  All entries start with the text "RAWLOADTESTv1.0".  The first entry will have a value of "[STARTRUN]", the last entry will have a value of "[DONE]", and all the lines between have a label of "[TESTING]".  Each entry has some time and iteration details, along with the URL and IP address of the user that started the test.
+            </p>
+
+            <h2>Tips</h2>
+            <p>
+            Saturation can be a complex topic involving considerations such as how many workstations will be running the script and how many windows will be running in each workstation.  Consider using the <b>Time Spread</b> parameter when simultaneously using multiple windows and/or multiple workstations.  You can validate performance criteria worded such as "System shall service X users within Y hours."  If the test does not finish in Y hours given X iterations then the system can be assumed to have failed that performance criteria.  You can check the <i>Maximum interval</i> statistic to see if you exceeded a response time requirement on the system.
+            </p>
+            <p>
+            Keep an eye on the running page to see if you get failures from the server that is responding to the URL requests.  Due to javascript limitations, the script does not capture server errors.
+            </p>
+            
+            <p>
+            If your web application has good error logging, make sure to check the error logs after your load test.  If the load test broke your application, you might find some details there.
+            </p>
+
+            <h2>Other Stuff</h2>
+            <p>If you find this useful, please let me know.  Also, if there is enough interest in an IIS/ASP/.NET version of the application I'll post one of those.  You can reach me at consulting@room4me.com.  Put "RawLoadTester" into the subject line so my spam filter is less likely to toss it before I see it.</p>
+
+        </div>
+
+
+        <hr>
+        <center>
+            <small><a href="RawLoadTester.php">The Raw Load Tester Application</a></small>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <small><a href="license.html">Open Source License</a></small>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <small><a href="http://www.room4me.com">Room4me.com Software LLC</a></small>
+        </center>
+    </body>
+</html>

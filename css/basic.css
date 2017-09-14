@@ -1,0 +1,39 @@
+/* 
+    Author     : Frank Font
+    Description:
+        This is the basic style sheet for the Raw Load Tester web pages.
+*/
+
+root { 
+    display: block;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+img.floatRight {
+    float: right;
+    margin: 4px;
+}
+
+label {
+    
+    width: 150px;
+}
+
+#done {
+    
+    border-right-style: double;
+    border-left-style: double;
+    border-bottom-style: double;
+    border-top-style: double;
+    border-right-color: #000000;
+    border-left-color: #000000;
+    border-bottom-color: #000000;
+    border-top-color: #000000;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    border-top-width: 2px;
+    background-color: #ccffcc;
+    padding-left: 5px;
+    padding-right: 5px;
+}
